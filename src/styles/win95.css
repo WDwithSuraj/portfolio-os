@@ -1,0 +1,158 @@
+/* ============================================================
+   Reusable Windows-95 component primitives
+   ============================================================ */
+
+/* ---- Buttons ---- */
+.w95-btn {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  background: var(--w95-gray);
+  box-shadow: var(--bevel-raised);
+  border: none;
+  padding: 4px 12px;
+  min-width: 64px;
+  color: var(--w95-black);
+  cursor: pointer;
+}
+.w95-btn:active,
+.w95-btn[aria-pressed="true"] {
+  box-shadow: var(--bevel-pressed);
+  padding: 5px 11px 3px 13px;
+}
+.w95-btn:focus-visible {
+  outline: 1px dotted var(--w95-black);
+  outline-offset: -4px;
+}
+
+/* ---- Sunken content panel ---- */
+.w95-panel {
+  background: var(--w95-white);
+  box-shadow: var(--bevel-sunken);
+  padding: 8px;
+}
+
+.w95-fieldset {
+  box-shadow: var(--bevel-raised);
+  border: none;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.w95-fieldset > legend {
+  padding: 0 4px;
+  font-weight: bold;
+}
+
+/* ---- Inputs ---- */
+.w95-input {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  background: var(--w95-white);
+  box-shadow: var(--bevel-sunken);
+  border: none;
+  padding: 4px 6px;
+  width: 100%;
+}
+
+/* ---- Title bar ---- */
+.w95-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 2px 0 4px;
+  background: var(--w95-navy-grad);
+  color: var(--w95-white);
+  font-weight: bold;
+  font-size: 12px;
+  cursor: grab;
+  user-select: none;
+}
+.w95-titlebar.inactive {
+  background: var(--w95-navy-grad-inactive);
+}
+.w95-titlebar:active {
+  cursor: grabbing;
+}
+.w95-titlebar__icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+.w95-titlebar__text {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.w95-titlebar__controls {
+  display: flex;
+  gap: 2px;
+}
+.w95-ctrl-btn {
+  width: 18px;
+  height: 16px;
+  background: var(--w95-gray);
+  box-shadow: var(--bevel-raised);
+  border: none;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--w95-black);
+  font-family: var(--font-ui);
+  padding-bottom: 2px;
+}
+.w95-ctrl-btn:active {
+  box-shadow: var(--bevel-pressed);
+}
+
+/* ---- Generic content typography inside windows ---- */
+.app-body {
+  padding: 14px;
+  overflow: auto;
+  height: 100%;
+  background: var(--w95-gray);
+}
+.app-body h1,
+.app-body h2,
+.app-body h3 {
+  font-family: var(--font-ui);
+}
+.app-body a {
+  color: var(--w95-navy);
+}
+.app-body p {
+  margin-bottom: 8px;
+}
+
+/* ---- Tag / chip ---- */
+.w95-chip {
+  display: inline-block;
+  background: var(--w95-gray);
+  box-shadow: var(--bevel-raised);
+  padding: 2px 8px;
+  margin: 0 4px 4px 0;
+  font-size: 11px;
+}
+
+/* ---- List with sunken background (file lists, menus) ---- */
+.w95-list {
+  background: var(--w95-white);
+  box-shadow: var(--bevel-sunken);
+  padding: 2px;
+  list-style: none;
+}
+.w95-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.w95-list li:hover,
+.w95-list li.selected {
+  background: var(--w95-blue-select);
+  color: var(--w95-white);
+}

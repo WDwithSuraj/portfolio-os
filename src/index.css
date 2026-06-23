@@ -1,0 +1,88 @@
+/* ============================================================
+   SurajOS — global reset + Windows-95 design tokens
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+:root {
+  /* Core 95 palette */
+  --w95-gray: #c0c0c0;
+  --w95-gray-light: #dfdfdf;
+  --w95-gray-dark: #808080;
+  --w95-white: #ffffff;
+  --w95-black: #0a0a0a;
+  --w95-navy: #000080;
+  --w95-navy-grad: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  --w95-navy-grad-inactive: linear-gradient(90deg, #808080 0%, #b5b5b5 100%);
+  --w95-teal: #008080; /* classic desktop background */
+  --w95-yellow: #ffffcc; /* tooltips / notes */
+  --w95-blue-select: #000080;
+
+  /* Bevels (the 98.css technique) */
+  --bevel-raised: inset -1px -1px var(--w95-black), inset 1px 1px var(--w95-white),
+    inset -2px -2px var(--w95-gray-dark), inset 2px 2px var(--w95-gray-light);
+  --bevel-sunken: inset -1px -1px var(--w95-white), inset 1px 1px var(--w95-gray-dark),
+    inset -2px -2px var(--w95-gray-light), inset 2px 2px var(--w95-black);
+  --bevel-pressed: inset -1px -1px var(--w95-white), inset 1px 1px var(--w95-black),
+    inset -2px -2px var(--w95-gray-light), inset 2px 2px var(--w95-gray-dark);
+
+  --font-ui: Tahoma, "MS Sans Serif", "Segoe UI", Geneva, sans-serif;
+  --font-mono: "VT323", "Lucida Console", monospace;
+
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--w95-black);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--w95-teal);
+  user-select: none;
+  cursor: default;
+}
+
+img {
+  image-rendering: pixelated;
+}
+
+::selection {
+  background: var(--w95-navy);
+  color: var(--w95-white);
+}
+
+/* Chunky 95-style scrollbars */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-track {
+  background: var(--w95-gray);
+  box-shadow: var(--bevel-sunken);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--w95-gray);
+  box-shadow: var(--bevel-raised);
+}
+::-webkit-scrollbar-button {
+  background: var(--w95-gray);
+  box-shadow: var(--bevel-raised);
+  display: block;
+  height: 16px;
+  width: 16px;
+}
