@@ -1,0 +1,54 @@
+name: Deploy to EC2
+
+# WHEN should this run? On every push to the main branch.
+# (Merging a PR into main IS a push to main, so merges trigger it too.)
+on:
+  push:
+    branches: [main]
+  # lets you also trigger it by hand from the GitHub "Actions" tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    # the "runner": a fresh Ubuntu machine GitHub gives us for this job
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pull your repo's code onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Node (your build needs it)
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm        # caches node_modules between runs = faster builds
+
+      # 3. Install dependencies. `npm ci` is the CI-friendly install:
+      #    it's faster and installs EXACTLY what package-lock.json says.
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build the static site -> creates ./dist
+      - name: Build
+        run: npm run build
+
+      # 5. Load the SSH private key (from GitHub Secrets) onto the runner
+      #    so it's allowed to log into your EC2 box.
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # record the server's fingerprint so ssh doesn't prompt "are you sure?"
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      # 6. Copy dist/ to the server. rsync = smart copy (only changed files).
+      #    --delete removes old files on the server that no longer exist locally,
+      #    keeping the web root clean (important: Vite content-hashes filenames).
+      - name: Deploy dist to EC2
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            dist/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/surajos/
